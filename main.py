@@ -10,34 +10,30 @@ class Drawer():
         root.geometry('1200x800')
         root.title('SuperDrawer')
 
-        self.root = root
 
-    def tools_menu(self):
-        tool_frame = Frame(self.root, width=100, height=800, bg='grey')
-        tool_frame.pack(side=LEFT)
+        # Drawing area
+        self.canvas = Canvas(root, bg='white', width=1100, height=800)
+        self.canvas.pack(side=RIGHT)
+        self.canvas.bind("<Button-1>", self.save_position)
+        self.canvas.bind("<B1-Motion>", self.add_line)
+
+        self.paint_size = 10
+
+        # Format Menu Left Side
+        self.tool_frame = Frame(root, width=100, height=800, bg='grey')
+        self.tool_frame.pack(side=LEFT)
         
         #Color changer button
         self.paint_color = "black"
-        color_button = Button(tool_frame, bg = self.paint_color,width=10,height=5, command=lambda: self.color_changer())
-        color_button.pack()
+        self.color_button = Button(self.tool_frame, bg = self.paint_color,width=10,height=5, command=lambda: self.color_changer())
+        self.color_button.pack()
 
-        self.color_button = color_button
 
     #Color changer
     def color_changer(self):
         paint_color = askcolor()
         self.paint_color = paint_color[1]
         self.color_button.configure( bg=paint_color[1])
-
-
-    def sketchpad(self):
-        canvas = Canvas(self.root, bg='white', width=1100, height=800)
-        canvas.pack(side=RIGHT)
-        canvas.bind("<Button-1>", self.save_position)
-        canvas.bind("<B1-Motion>", self.add_line)
-
-        self.canvas = canvas
-        self.paint_size = 10
 
     # Mouse position       
     def save_position(self, event):
@@ -59,9 +55,7 @@ def main():
     # Initiate drawer class
     drawer = Drawer(root)
 
-    drawer.sketchpad()
 
-    drawer.tools_menu()
 
     # Loop for window
     root.mainloop()
