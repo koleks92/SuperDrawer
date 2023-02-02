@@ -16,10 +16,18 @@ class Drawer():
         tool_frame = Frame(self.root, width=100, height=800, bg='grey')
         tool_frame.pack(side=LEFT)
         
-        self.paint_color = "blue"
-        color_button = Button(tool_frame, bg = self.paint_color,width=10,height=5, command=lambda: functions.color_changer(paint_color))
+        #Color changer button
+        self.paint_color = "black"
+        color_button = Button(tool_frame, bg = self.paint_color,width=10,height=5, command=lambda: self.color_changer())
         color_button.pack()
-        print(paint_color)
+
+        self.color_button = color_button
+
+    #Color changer
+    def color_changer(self):
+        paint_color = askcolor()
+        self.paint_color = paint_color[1]
+        self.color_button.configure( bg=paint_color[1])
 
 
     def sketchpad(self):
@@ -39,6 +47,7 @@ class Drawer():
     def add_line(self, event):
         self.canvas.create_line(self.lastx, self.lasty, event.x, event.y,width=self.paint_size, fill=self.paint_color)
         self.save_position(event)
+    
 
 
 
