@@ -17,16 +17,29 @@ class Drawer():
         self.canvas.bind("<Button-1>", self.save_position)
         self.canvas.bind("<B1-Motion>", self.add_line)
 
-        self.paint_size = 10
+        self.brush_size = 10
 
         # Format Menu Left Side
         self.tool_frame = Frame(root, width=100, height=800, bg='grey')
         self.tool_frame.pack(side=LEFT)
+
+        # size frame and brush size changer
+        self.size_frame = LabelFrame(self.tool_frame, text="Brush size")
+        self.size_frame.pack()
+
+        self.brush_size = tk.Entry(self.size_frame)
+        self.brush_size.insert(END, "10")
+        self.brush_size.pack()
         
-        #Color changer button
+        # Color frame and color changer
+        self.color_frame = LabelFrame(self.tool_frame, text="Color")
+        self.color_frame.pack()
+
         self.paint_color = "black"
-        self.color_button = Button(self.tool_frame, bg = self.paint_color,width=10,height=5, command=lambda: self.color_changer())
+        self.color_button = Button(self.color_frame, bg = self.paint_color,width=10,height=5, command=lambda: self.color_changer())
         self.color_button.pack()
+
+       
 
 
     #Color changer
@@ -41,7 +54,7 @@ class Drawer():
         self.lasty = event.y
     # Drawing a line
     def add_line(self, event):
-        self.canvas.create_line(self.lastx, self.lasty, event.x, event.y,width=self.paint_size, fill=self.paint_color)
+        self.canvas.create_line(self.lastx, self.lasty, event.x, event.y,width=self.brush_size.get(), fill=self.paint_color)
         self.save_position(event)
     
 
