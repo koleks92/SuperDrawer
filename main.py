@@ -20,8 +20,18 @@ class Drawer():
         self.tool_frame = Frame(root, width=100, height=800, bg='grey')
         self.tool_frame.pack(side=LEFT)
 
-        # Erase button
-        self.erase_button = Button(self.tool_frame, text = "Eraser", relief="raised", command=lambda: self.erase_function())
+        #Brush style frame and brush buttons
+        self.brush_frame = LabelFrame(self.tool_frame, text="Brush")
+        self.brush_frame.pack()
+
+        # Normal
+        self.normal_brush_button = Button(self.brush_frame, text = "Normal", relief="raised", command=lambda: self.normal_brush())
+        self.normal_brush_button.pack()
+        # Funky
+        self.funky_brush_button = Button(self.brush_frame, text = "Funky", relief="raised", command=lambda: self.funky_brush())
+        self.funky_brush_button.pack()
+        # Eraser
+        self.erase_button = Button(self.brush_frame, text = "Eraser", relief="raised", command=lambda: self.erase_function())
         self.erase_button.pack()
 
         # Size frame and brush size changer
@@ -54,7 +64,7 @@ class Drawer():
         self.lasty = event.y
     # Drawing a line
     def add_line(self, event):
-        self.canvas.create_line(self.lastx, self.lasty, event.x, event.y,width=self.brush_size.get(), fill=self.paint_color)
+        self.canvas.create_line(self.lastx, self.lasty, event.x, event.y,width=self.brush_size.get(), fill=self.paint_color, smooth=False, capstyle='round')
         self.save_position(event)
 
     def erase_function(self):
