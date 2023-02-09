@@ -14,7 +14,7 @@ class Drawer():
         self.canvas = Canvas(root, bg='white', width=1100, height=800)
         self.canvas.pack(side=RIGHT)
         self.canvas.bind("<Button-1>", self.save_position)
-        self.canvas.bind("<B1-Motion>", self.add_line)
+        self.canvas.bind("<B1-Motion>", self.add_line_normal)
 
         # Format Menu Left Side
         self.tool_frame = Frame(root, width=100, height=800, bg='grey')
@@ -63,10 +63,15 @@ class Drawer():
         self.lastx = event.x
         self.lasty = event.y
     # Drawing a line
-    def add_line(self, event):
+    def add_line_normal(self, event):
         self.canvas.create_line(self.lastx, self.lasty, event.x, event.y,width=self.brush_size.get(), fill=self.paint_color, smooth=False, capstyle='round')
         self.save_position(event)
 
+    def add_line_funky(self, event):
+        self.canvas.create_oval(self.lastx, self.lasty, event.x, event.y,width=self.brush_size.get(), fill=self.paint_color, outline=self.paint_color)
+        self.save_position(event)
+    
+        
     def erase_function(self):
         if self.erase_button.config('relief')[-1] == 'sunken': # Check if button pressed
             self.erase_button.config(relief="raised") 
@@ -75,6 +80,24 @@ class Drawer():
         else:
             self.erase_button.config(relief="sunken")
             self.paint_color = "white"
+
+    def normal_brush(self):
+        if self.normal_brush_button.config('relief')[-1] == 'sunken': # Check if button pressed
+            self.normal_brush_button.config(relief="raised") 
+        else:
+            self.funky_brush_button.config(relief="raised") 
+            self.normal_brush_button.config(relief="sunken")
+            self.canvas.bind("<B1-Motion>", self.add_line_normal)
+
+
+    def funky_brush(self):
+        if self.funky_brush_button.config('relief')[-1] == 'sunken': # Check if button pressed
+            self.funky_brush_button.config(relief="raised") 
+        else:
+            self.normal_brush_button.config(relief="raised") 
+            self.funky_brush_button.config(relief="sunken")
+            self.canvas.bind("<B1-Motion>", self.add_line_funky)
+
 
 
 
