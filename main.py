@@ -20,6 +20,7 @@ class Drawer():
         self.tool_frame = Frame(root, width=100, height=800, bg='grey')
         self.tool_frame.pack(side=LEFT)
 
+    def brush_erase(self):
         #Brush style frame and brush buttons
         self.brush_frame = LabelFrame(self.tool_frame, text="Brush")
         self.brush_frame.pack()
@@ -34,6 +35,7 @@ class Drawer():
         self.erase_button = Button(self.brush_frame, text = "Eraser", relief="raised", command=lambda: self.erase_function())
         self.erase_button.pack()
 
+    def size_color(self):
         # Size frame and brush size changer
         self.size_frame = LabelFrame(self.tool_frame, text="Brush size")
         self.size_frame.pack()
@@ -100,14 +102,15 @@ class Drawer():
 
 
 
-
-
-
 def main():
     # Initiate tkinkter engine
     root = Tk()
     # Initiate drawer class
     drawer = Drawer(root)
+    # Brush and erase
+    drawer.brush_erase()
+    # Size and color
+    drawer.size_color()
     # Loop for window
     root.mainloop()
 
