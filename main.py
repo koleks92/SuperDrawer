@@ -66,12 +66,7 @@ class Drawer():
         self.color_button.pack()
 
     
-    #Drawing a line shape
-    def line_shape(self):
-        TODO
-
-    def polygon_shape(self):
-        TODO
+    
 
     #Color changer
     def color_changer(self):
@@ -91,6 +86,21 @@ class Drawer():
     def add_line_funky(self, event):
         self.canvas.create_oval(self.lastx, self.lasty, event.x, event.y,width=self.brush_size.get(), fill=self.paint_color, outline=self.paint_color)
         self.save_position(event)
+
+    # Drawing a lines (shape)
+    def add_line_shape(self, event):
+        # if old_cor:
+        #     old_x, old_y = old_cor
+        #     self.canvas.create_line(event.x, event.y, old_x, old_y,width=self.brush_size.get(), fill=self.paint_color, smooth=False, capstyle='round')
+        # old_cor = event.x, event.y
+        # print("add line shape")
+
+    # Buttons behaviour
+    def line_shape(self):
+        self.canvas.bind("<B1-Motion>", self.add_line_shape)
+
+    def polygon_shape(self):
+        pass
     
         
     def erase_function(self):
