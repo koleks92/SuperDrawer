@@ -20,6 +20,18 @@ class Drawer():
         self.tool_frame = Frame(root, width=100, height=800, bg='grey')
         self.tool_frame.pack(side=LEFT)
 
+
+    def shapes(self):
+        self.shape_frame = LabelFrame(self.tool_frame, text="Shapes")
+        self.shape_frame.pack()
+
+        # Line
+        self.line_button = Button(self.shape_frame, text = "Line", relief="raised", command=lambda: self.line_shape())
+        self.line_button.pack()
+        # Polygon 
+        self.polygon_button = Button(self.shape_frame, text = "Polygon", relief="raised", command=lambda: self.polygon_shape())
+        self.polygon_button.pack()
+
     def brush_erase(self):
         #Brush style frame and brush buttons
         self.brush_frame = LabelFrame(self.tool_frame, text="Brush")
@@ -54,6 +66,13 @@ class Drawer():
         self.color_button.pack()
 
     
+    #Drawing a line shape
+    def line_shape(self):
+        TODO
+
+    def polygon_shape(self):
+        TODO
+
     #Color changer
     def color_changer(self):
         paint_color = askcolor()
@@ -64,7 +83,7 @@ class Drawer():
     def save_position(self, event):
         self.lastx = event.x
         self.lasty = event.y
-    # Drawing a line
+    # Drawing a line (brush)
     def add_line_normal(self, event):
         self.canvas.create_line(self.lastx, self.lasty, event.x, event.y,width=self.brush_size.get(), fill=self.paint_color, smooth=False, capstyle='round')
         self.save_position(event)
@@ -107,9 +126,11 @@ def main():
     root = Tk()
     # Initiate drawer class
     drawer = Drawer(root)
-    # Brush and erase
+    # Shapes frame
+    drawer.shapes()
+    # Brush and erase frame
     drawer.brush_erase()
-    # Size and color
+    # Size and color frame
     drawer.size_color()
     # Loop for window
     root.mainloop()
