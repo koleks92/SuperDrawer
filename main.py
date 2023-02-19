@@ -16,11 +16,7 @@ class Drawer():
         self.canvas.bind("<Button-1>", self.save_position)
         self.canvas.bind("<B1-Motion>", self.add_line_normal)
         
-        self.click_number = 0
-        self.x1 = 0
-        self.x2 = 0
-        self.y1 = 0
-        self.y2 = 0
+        self.click_number = 0 # Checker for shapes !
 
         # Format Menu Left Side
         self.tool_frame = Frame(root, width=100, height=800, bg='grey')
@@ -100,9 +96,7 @@ class Drawer():
             self.lasty = event.y
             self.click_number = 1
         else:
-            self.x2 = event.x
-            self.y2 = event.y
-            self.canvas.create_line(self.lastx,self.lasty,self.x2,self.y2, width=self.brush_size.get(), fill=self.paint_color )
+            self.canvas.create_line(self.lastx,self.lasty,event.x,event.y, width=self.brush_size.get(), fill=self.paint_color )
             self.save_position(event)
 
     def add_polygon_shape(self, event):
