@@ -15,6 +15,7 @@ class Drawer():
         self.canvas.pack(side=RIGHT)
         self.canvas.bind("<Button-1>", self.save_position)
         self.canvas.bind("<B1-Motion>", self.add_line_normal)
+        self.click_number = 0
 
         # Format Menu Left Side
         self.tool_frame = Frame(root, width=100, height=800, bg='grey')
@@ -89,18 +90,42 @@ class Drawer():
 
     # Drawing a lines (shape)
     def add_line_shape(self, event):
-        # if old_cor:
-        #     old_x, old_y = old_cor
-        #     self.canvas.create_line(event.x, event.y, old_x, old_y,width=self.brush_size.get(), fill=self.paint_color, smooth=False, capstyle='round')
-        # old_cor = event.x, event.y
-        # print("add line shape")
+        if self.click_number == 0:
+            self.x1 = event.x
+            self.y1 = event.y
+            self.click_number = 1
+        else:
+            self.x2 = event.x
+            self.y2 = event.y
+            self.canvas.create_line(self.x1,self.y1,self.x2,self.y2, width=self.brush_size.get(), fill=self.paint_color )
+            self.click_number = 0
 
     # Buttons behaviour
+
     def line_shape(self):
-        self.canvas.bind("<B1-Motion>", self.add_line_shape)
+        if self.line_button.config('relief')[-1] == 'sunken': # Check if button pressed
+            self.line_button.config(relief="raised")
+            self.canvas.bind("<Button-1>", self.save_position)
+        else:
+            self.polygon_button.config(relief="raised")
+            self.line_button.config(relief="sunken") 
+            self.normal_brush_button.config(relief="sunken")
+            self.funky_brush_button.config(relief="raised")
+            self.canvas.bind("<B1-Motion>", self.add_line_normal)
+            self.canvas.bind("<Button-1>", self.add_line_shape)
+
 
     def polygon_shape(self):
-        pass
+        if self.polygon_button.config('relief')[-1] == 'sunken': # Check if button pressed
+            self.polygon_button.config(relief="raised")
+            self.canvas.bind("<Button-1>", self.save_position)
+        else:
+            self.polygon_button.config(relief="sunken")
+            self.line_button.config(relief="raised") 
+            self.normal_brush_button.config(relief="sunken")
+            self.funky_brush_button.config(relief="raised")
+            self.canvas.bind("<B1-Motion>", self.add_line_normal)
+            self.canvas.bind("<Button-1>", self.add_line_shape)
     
         
     def erase_function(self):
@@ -114,7 +139,9 @@ class Drawer():
 
     def normal_brush(self):
         if self.normal_brush_button.config('relief')[-1] == 'sunken': # Check if button pressed
-            self.normal_brush_button.config(relief="raised") 
+            self.normal_brush_button.config(relief="raised")
+            self.funky_brush_button.config(relief="sunken")
+            self.canvas.bind("<B1-Motion>", self.add_line_funky)
         else:
             self.funky_brush_button.config(relief="raised") 
             self.normal_brush_button.config(relief="sunken")
@@ -123,7 +150,9 @@ class Drawer():
 
     def funky_brush(self):
         if self.funky_brush_button.config('relief')[-1] == 'sunken': # Check if button pressed
-            self.funky_brush_button.config(relief="raised") 
+            self.funky_brush_button.config(relief="raised")
+            self.normal_brush_button.config(relief="sunken")
+            self.canvas.bind("<B1-Motion>", self.add_line_normal)
         else:
             self.normal_brush_button.config(relief="raised") 
             self.funky_brush_button.config(relief="sunken")
