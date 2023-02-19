@@ -15,7 +15,12 @@ class Drawer():
         self.canvas.pack(side=RIGHT)
         self.canvas.bind("<Button-1>", self.save_position)
         self.canvas.bind("<B1-Motion>", self.add_line_normal)
+        
         self.click_number = 0
+        self.x1 = 0
+        self.x2 = 0
+        self.y1 = 0
+        self.y2 = 0
 
         # Format Menu Left Side
         self.tool_frame = Frame(root, width=100, height=800, bg='grey')
@@ -91,14 +96,18 @@ class Drawer():
     # Drawing a lines (shape)
     def add_line_shape(self, event):
         if self.click_number == 0:
-            self.x1 = event.x
-            self.y1 = event.y
+            self.lastx = event.x
+            self.lasty = event.y
             self.click_number = 1
         else:
             self.x2 = event.x
             self.y2 = event.y
-            self.canvas.create_line(self.x1,self.y1,self.x2,self.y2, width=self.brush_size.get(), fill=self.paint_color )
-            self.click_number = 0
+            self.canvas.create_line(self.lastx,self.lasty,self.x2,self.y2, width=self.brush_size.get(), fill=self.paint_color )
+            self.save_position(event)
+
+    def add_polygon_shape(self, event):
+        pass
+
 
     # Buttons behaviour
 
@@ -107,6 +116,7 @@ class Drawer():
             self.line_button.config(relief="raised")
             self.canvas.bind("<Button-1>", self.save_position)
         else:
+            self.click_number = 0 # Reset last position !
             self.polygon_button.config(relief="raised")
             self.line_button.config(relief="sunken") 
             self.normal_brush_button.config(relief="sunken")
