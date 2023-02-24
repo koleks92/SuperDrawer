@@ -33,6 +33,9 @@ class Drawer():
         # Polygon 
         self.polygon_button = Button(self.shape_frame, text = "Polygon", relief="raised", command=lambda: self.polygon_shape())
         self.polygon_button.pack()
+        # Oval
+        self.oval_button = Button(self.shape_frame, text = "Oval", relief="raised", command=lambda: self.oval_shape())
+        self.oval_button.pack()
 
     def brush_erase(self):
         #Brush style frame and brush buttons
@@ -96,11 +99,26 @@ class Drawer():
             self.lasty = event.y
             self.click_number = 1
         else:
-            self.canvas.create_line(self.lastx,self.lasty,event.x,event.y, width=self.brush_size.get(), fill=self.paint_color )
-            self.save_position(event)
+            self.canvas.create_line(self.lastx,self.lasty,event.x,event.y, width=self.brush_size.get(), fill=self.paint_color, capstyle="round", joinstyle="round")
+            self.click_number = 0
 
     def add_polygon_shape(self, event):
-        pass
+        if self.click_number == 0:
+            self.lastx = event.x
+            self.lasty = event.y
+            self.click_number = 1
+        else:
+            self.canvas.create_line(self.lastx,self.lasty,event.x,event.y, width=self.brush_size.get(), fill=self.paint_color, capstyle="round", joinstyle="round")
+            self.save_position(event)
+
+    def add_oval_shape(self, event):
+        if self.click_number == 0:
+            self.lastx = event.x
+            self.lasty = event.y
+            self.click_number = 1
+        else:
+            self.canvas.create_oval(self.lastx,self.lasty,event.x,event.y, width=self.brush_size.get(), fill=self.paint_color)
+            self.click_number = 0
 
 
     # Buttons behaviour
@@ -110,7 +128,8 @@ class Drawer():
             self.line_button.config(relief="raised")
             self.canvas.bind("<Button-1>", self.save_position)
         else:
-            self.click_number = 0 # Reset last position !
+            self.click_number = 0 ## Reset last position !
+            self.oval_button.config(relief="raised")
             self.polygon_button.config(relief="raised")
             self.line_button.config(relief="sunken") 
             self.normal_brush_button.config(relief="sunken")
@@ -124,12 +143,28 @@ class Drawer():
             self.polygon_button.config(relief="raised")
             self.canvas.bind("<Button-1>", self.save_position)
         else:
+            self.click_number = 0 ## Reset last position !
+            self.oval_button.config(relief="raised")
             self.polygon_button.config(relief="sunken")
+            self.line_button.config(relief="raised")  
+            self.normal_brush_button.config(relief="sunken")
+            self.funky_brush_button.config(relief="raised")
+            self.canvas.bind("<B1-Motion>", self.add_line_normal)
+            self.canvas.bind("<Button-1>", self.add_polygon_shape)
+
+    def oval_shape(self):
+        if self.oval_button.config('relief')[-1] == 'sunken': # Check if button pressed
+            self.oval_button.config(relief="raised")
+            self.canvas.bind("<Button-1>", self.save_position)
+        else:
+            self.click_number = 0 ## Reset last position !
+            self.oval_button.config(relief="sunken")
+            self.polygon_button.config(relief="raised")
             self.line_button.config(relief="raised") 
             self.normal_brush_button.config(relief="sunken")
             self.funky_brush_button.config(relief="raised")
             self.canvas.bind("<B1-Motion>", self.add_line_normal)
-            self.canvas.bind("<Button-1>", self.add_line_shape)
+            self.canvas.bind("<Button-1>", self.add_oval_shape)
     
         
     def erase_function(self):
