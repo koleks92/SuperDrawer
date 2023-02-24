@@ -1,1 +1,1 @@
-save_position
+width=8

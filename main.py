@@ -28,13 +28,13 @@ class Drawer():
         self.shape_frame.pack()
 
         # Line
-        self.line_button = Button(self.shape_frame, text = "Line", relief="raised", command=lambda: self.line_shape())
+        self.line_button = Button(self.shape_frame,width=7, text = "Line", relief="raised", command=lambda: self.line_shape())
         self.line_button.pack()
         # Polygon 
-        self.polygon_button = Button(self.shape_frame, text = "Polygon", relief="raised", command=lambda: self.polygon_shape())
+        self.polygon_button = Button(self.shape_frame, width=7, text = "Polygon", relief="raised", command=lambda: self.polygon_shape())
         self.polygon_button.pack()
         # Oval
-        self.oval_button = Button(self.shape_frame, text = "Oval", relief="raised", command=lambda: self.oval_shape())
+        self.oval_button = Button(self.shape_frame, width=7, text = "Oval", relief="raised", command=lambda: self.oval_shape())
         self.oval_button.pack()
 
     def brush_erase(self):
@@ -43,13 +43,13 @@ class Drawer():
         self.brush_frame.pack()
 
         # Normal
-        self.normal_brush_button = Button(self.brush_frame, text = "Normal", relief="raised", command=lambda: self.normal_brush())
+        self.normal_brush_button = Button(self.brush_frame, width=7, text = "Normal", relief="raised", command=lambda: self.normal_brush())
         self.normal_brush_button.pack()
         # Funky
-        self.funky_brush_button = Button(self.brush_frame, text = "Funky", relief="raised", command=lambda: self.funky_brush())
+        self.funky_brush_button = Button(self.brush_frame, width=7, text = "Funky", relief="raised", command=lambda: self.funky_brush())
         self.funky_brush_button.pack()
         # Eraser
-        self.erase_button = Button(self.brush_frame, text = "Eraser", relief="raised", command=lambda: self.erase_function())
+        self.erase_button = Button(self.brush_frame, width=7, text = "Eraser", relief="raised", command=lambda: self.erase_function())
         self.erase_button.pack()
 
     def size_color(self):
