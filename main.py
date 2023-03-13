@@ -200,7 +200,7 @@ class Drawer():
             self.paint_color = copy_color
         else:
             self.erase_button.config(relief="sunken")
-            self.paint_color = self.background_color[1]
+            self.paint_color = self.background_color
 
     def normal_brush(self):
         if self.normal_brush_button.config('relief')[-1] == 'sunken': # Check if button pressed
@@ -228,24 +228,13 @@ class Drawer():
         
         #File Menu
         filemenu = Menu(menubar, tearoff=0)
-        filemenu.add_command(label="New", command=lambda: functions.new_file(self.root, self.canvas))
-        filemenu.add_command(label="Open", command=lambda: functions.open_file(self.root, self.canvas))
-        filemenu.add_command(label="Save", command=lambda: functions.save_file(self.root,self.canvas))
-        filemenu.add_separator()
+        # filemenu.add_command(label="New", command=lambda: functions.new_file(self.root, self.canvas))
+        # filemenu.add_command(label="Open", command=lambda: functions.open_file(self.root, self.canvas))
+        # filemenu.add_command(label="Save", command=lambda: functions.save_file(self.root,self.canvas))
+        # filemenu.add_separator()
         filemenu.add_command(label="Exit", command=lambda: functions.exit(self.root,self.canvas))
         menubar.add_cascade(label="File", menu=filemenu)
-        # Edit menu
-        editmenu = Menu(menubar, tearoff=0)
-        editmenu.add_command(label="Undo", command='TODO', accelerator="Ctrl+Z")
-        editmenu.add_command(label="Redo", command='TODO')
-        editmenu.add_separator()
-        editmenu.add_command(label="Cut", command=lambda: functions.cut(self.canvas), accelerator='Ctrl-X')
-        editmenu.add_command(label="Copy", command=lambda: functions.copy(self.canvas), accelerator='Ctrl-C')
-        editmenu.add_command(label="Paste", command=lambda: functions.paste(self.canvas), accelerator='Ctrl-V')
-        editmenu.add_command(label="Clear", command=lambda: self.clear_canvas())
-        editmenu.add_separator()
-        editmenu.add_command(label="Select All", command=lambda: functions.select_all(self.canvas), accelerator='Ctrl-A')
-        menubar.add_cascade(label="Edit", menu=editmenu)
+
         # About menu
         aboutmenu = Menu(menubar, tearoff=0)
         aboutmenu.add_command(label="Help", command=lambda: functions.help(self.root))
