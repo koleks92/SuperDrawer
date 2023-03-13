@@ -65,64 +65,50 @@ def file_not_empty(window, text):
 
 '''Edit Menu'''
 
-def cut(text):
-    global data
-    try:
-        if text.selection_get():
-            data = text.selection_get()
-            text.delete('sel.first','sel.last')
-    except:
-        pass
-
-def copy(text):
-    global data
-    try:
-        if text.selection_get():
-            data = text.selection_get()
-    except:
-        pass
-def paste(text):
-    global data
-    try:
-        text.insert(tk.END, data)
-    except:
-        pass
 def delete(text):
     try:
         if text.selection_get():
             text.delete('sel.first','sel.last')
     except:
         pass
-def select_all(text, event=None):
-    '''Select all text'''
-    text.tag_add("sel", "1.0","end")
-    text.tag_config("sel",background="gray",foreground="white")
-    return 'break'
+
 
 
 def about(window):
     global pop
     pop = Toplevel(window)
-    pop.title('About SuperEditor')
-    pop.geometry(f"+600+400")
+    pop.title('About SuperDrawer')
+    pop.geometry(f"+800+600")
 
     pop_label = Label(pop, text="App created by koleks92")
     pop_label.pack (pady=10)
     
-    pop_label_2 = Label(pop, text="Final project for CS50P")
+    pop_label_2 = Label(pop, text=" www.github.com/koleks92 ")
     pop_label_2.pack (pady=20)
 
 def help(window):
     global pop
     pop = Toplevel(window)
     pop.title('Help')
-    pop.geometry("900x400")
+    pop.geometry("800x600")
 
     pop_label = Label(pop, text="How to use SuperDrawer", font=("Helvetica", 16))
     pop_label.pack (pady=10)
 
-    pop_label_2 = Label(pop, text='If you want to create a new file, save current file or open other file, click "File" option\nIf you want to change font family, font size, font color or background color, click "Format" option\nIf you want to change to fullscreen, click "View" option\nIf you want to undo/redo action, copy, cut, paste or select all, click "Edit" option')
+    pop_label_2 = Label(pop, text="To clear the canvas, please click 'Clear' button in 'Canvas Label Frame'")
     pop_label_2.pack (pady=20)
 
-    pop_label_3 = Label(pop, text="If you want to make text bold, italic, underlined or overstruk,\nselect text or select all (Ctrl+A) and choose option from menu")
-    pop_label_3.pack (pady=30)        
+    pop_label_3 = Label(pop, text="To change background color, pleace click 'Background' button in 'Canvas Label Frame'\n and choose a color")
+    pop_label_3.pack (pady=22)      
+
+    pop_label_4 = Label(pop, text="To draw a shape (Line/Polygon/Oval), first choose a shape type from 'Shapes Label Frame',\n after choose starting point on canvas(mouse left click),\n and choose ending point(mouse left click)")
+    pop_label_4.pack (pady=24) 
+
+    pop_label_5 = Label(pop, text="To draw with a brush (Normal/Funky/Eraser), first choose a brush type form 'Brush Label Frame,\n after click on canvas(mouse left click) and hold while moving the cursor")
+    pop_label_5.pack (pady=26) 
+
+    pop_label_6 = Label(pop, text="To change brush/shape size, please write the size in pixels in 'Brush Size Label'")
+    pop_label_6.pack (pady=28) 
+
+    pop_label_7 = Label(pop, text="To change brush/shape color, please click the color square button under 'Brush Size Label'")
+    pop_label_7.pack (pady=30) 
